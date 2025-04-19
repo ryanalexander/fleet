@@ -67,12 +67,12 @@ table "job" {
   }
 
   column "sender_id" {
-    null = false
+    null = true
     type = integer
   }
 
   column "receiver_id" {
-    null = false
+    null = true
     type = integer
   }
 
@@ -98,14 +98,12 @@ table "job" {
 
   foreign_key "job_sender_fk" {
     columns     = [column.sender_id]
-    ref_table   = table.person
-    ref_columns = [column.id]
+    ref_columns = [table.person.column.id]
   }
 
   foreign_key "job_receiver_fk" {
     columns     = [column.receiver_id]
-    ref_table   = table.person
-    ref_columns = [column.id]
+    ref_columns = [table.person.column.id]
   }
 
   primary_key "job_pk" {
@@ -136,12 +134,12 @@ table "location" {
 
   column "latitude" {
     null = false
-    type = double
+    type = float8
   }
 
   column "longitude" {
     null = false
-    type = double
+    type = float8
   }
 
   column "notes" {
@@ -192,14 +190,12 @@ table "job_location" {
 
   foreign_key "jl_job_fk" {
     columns     = [column.job_id]
-    ref_table   = table.job
-    ref_columns = [column.id]
+    ref_columns = [table.job.column.id]
   }
 
   foreign_key "jl_location_fk" {
     columns     = [column.location_id]
-    ref_table   = table.location
-    ref_columns = [column.id]
+    ref_columns = [table.location.column.id]
   }
 
   primary_key "job_location_pk" {
@@ -271,8 +267,7 @@ table "job_attachments" {
 
   foreign_key "ja_job_fk" {
     columns     = [column.job_id]
-    ref_table   = table.job
-    ref_columns = [column.id]
+    ref_columns = [table.job.column.id]
   }
 
   primary_key "job_attachments_pk" {
@@ -318,12 +313,12 @@ table "job_events" {
 
   column "gps_latitude" {
     null = true
-    type = double
+    type = float8
   }
 
   column "gps_longitude" {
     null = true
-    type = double
+    type = float8
   }
 
   column "metadata" {
@@ -333,20 +328,17 @@ table "job_events" {
 
   foreign_key "je_job_fk" {
     columns     = [column.job_id]
-    ref_table   = table.job
-    ref_columns = [column.id]
+    ref_columns = [table.job.column.id]
   }
 
   foreign_key "je_event_type_fk" {
     columns     = [column.event_type]
-    ref_table   = table.event_type
-    ref_columns = [column.code]
+    ref_columns = [table.event_type.column.code]
   }
 
   foreign_key "je_driver_fk" {
     columns     = [column.driver]
-    ref_table   = table.driver
-    ref_columns = [column.id]
+    ref_columns = [table.driver.column.id]
   }
 
   index "idx_job_events_job_time" {
