@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package internaledge;
+
+import "google/protobuf/timestamp.proto";
+
+message Job {
+  int64 job_id = 1;
+}
+
+message Scan {
+  Job job = 1;
+  string event_id = 2;
+  google.protobuf.Timestamp timestamp = 3;
+  string source = 4;
+  optional Location location = 5;
+}
+
+message Location {
+  double latitude = 1;
+  double longitude = 2;
+  optional double altitude = 3;
+}
+
+message ScanRequest {
+  repeated Scan scans = 1;
+}
+
+message ProcessingResponse {
+  enum Status {
+    SUCCESS = 0;
+    FAILURE = 1;
+    PARTIAL_SUCCESS = 2;
+  }
+  Status status = 1;
+  string message = 2;
+  repeated Scan successful_scans = 3;
+  optional Job job = 4;
+}
+
+service EdgeConnector {
+  rpc GetJob(Job) returns (Job);
+  rpc ProcessScans(ScanRequest) returns (ProcessingResponse);
+}
