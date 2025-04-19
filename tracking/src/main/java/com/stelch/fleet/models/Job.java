@@ -34,4 +34,8 @@ public class Job extends WebEmbeddable {
         System.out.println("Fetching job details for job ID: " + id);
     }
 
+    public void save() {
+        // TODO
+    }
+
 }

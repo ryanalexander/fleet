@@ -37,4 +37,8 @@ public class JobEvent extends WebEmbeddable {
         System.out.println("Fetching job event details for job event ID: " + id);
     }
 
+    public void save() {
+        // TODO
+    }
+
 }
